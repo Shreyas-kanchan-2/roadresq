@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as MechanicsRouteImport } from './routes/mechanics'
 import { Route as RequestRouteImport } from './routes/request'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as TrackRouteImport } from './routes/track'
@@ -20,9 +22,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssistantRoute = AssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MechanicsRoute = MechanicsRouteImport.update({
+  id: '/mechanics',
+  path: '/mechanics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RequestRoute = RequestRouteImport.update({
@@ -43,14 +55,18 @@ const TrackRoute = TrackRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/mechanics': typeof MechanicsRoute
   '/request': typeof RequestRoute
   '/services': typeof ServicesRoute
   '/track': typeof TrackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/mechanics': typeof MechanicsRoute
   '/request': typeof RequestRoute
   '/services': typeof ServicesRoute
   '/track': typeof TrackRoute
@@ -58,22 +74,48 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/mechanics': typeof MechanicsRoute
   '/request': typeof RequestRoute
   '/services': typeof ServicesRoute
   '/track': typeof TrackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/how-it-works' | '/request' | '/services' | '/track'
+  fullPaths:
+    | '/'
+    | '/assistant'
+    | '/how-it-works'
+    | '/mechanics'
+    | '/request'
+    | '/services'
+    | '/track'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/how-it-works' | '/request' | '/services' | '/track'
-  id: '__root__' | '/' | '/how-it-works' | '/request' | '/services' | '/track'
+  to:
+    | '/'
+    | '/assistant'
+    | '/how-it-works'
+    | '/mechanics'
+    | '/request'
+    | '/services'
+    | '/track'
+  id:
+    | '__root__'
+    | '/'
+    | '/assistant'
+    | '/how-it-works'
+    | '/mechanics'
+    | '/request'
+    | '/services'
+    | '/track'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssistantRoute: typeof AssistantRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  MechanicsRoute: typeof MechanicsRoute
   RequestRoute: typeof RequestRoute
   ServicesRoute: typeof ServicesRoute
   TrackRoute: typeof TrackRoute
@@ -88,11 +130,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assistant': {
+      id: '/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-it-works': {
       id: '/how-it-works'
       path: '/how-it-works'
       fullPath: '/how-it-works'
       preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mechanics': {
+      id: '/mechanics'
+      path: '/mechanics'
+      fullPath: '/mechanics'
+      preLoaderRoute: typeof MechanicsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/request': {
@@ -121,7 +177,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssistantRoute: AssistantRoute,
   HowItWorksRoute: HowItWorksRoute,
+  MechanicsRoute: MechanicsRoute,
   RequestRoute: RequestRoute,
   ServicesRoute: ServicesRoute,
   TrackRoute: TrackRoute,
