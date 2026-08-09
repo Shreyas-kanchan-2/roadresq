@@ -32,13 +32,17 @@ import {
   type RequestInput,
 } from "@/lib/roadresq/store";
 
-type Search = { vehicle?: string; issue?: string; location?: string };
+type Search = {
+  vehicle: string | undefined;
+  issue: string | undefined;
+  location: string | undefined;
+};
 
 export const Route = createFileRoute("/request")({
   validateSearch: (search: Record<string, unknown>): Search => ({
-    vehicle: typeof search.vehicle === "string" ? search.vehicle : undefined,
-    issue: typeof search.issue === "string" ? search.issue : undefined,
-    location: typeof search.location === "string" ? search.location : undefined,
+    vehicle: typeof search["vehicle"] === "string" ? (search["vehicle"] as string) : undefined,
+    issue: typeof search["issue"] === "string" ? (search["issue"] as string) : undefined,
+    location: typeof search["location"] === "string" ? (search["location"] as string) : undefined,
   }),
   head: () => ({
     meta: [
@@ -72,7 +76,7 @@ function RequestPage() {
     symptoms: "",
     location: search.location ?? "",
     phone: "",
-    photoName: undefined,
+    photoName: "",
   });
   const [errors, setErrors] = useState<Partial<Record<keyof RequestInput, string>>>({});
   const [pendingId, setPendingId] = useState<string | null>(null);
@@ -265,13 +269,13 @@ function RequestPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      set("photoName", form.photoName ? undefined : "breakdown-photo.jpg");
+                      set("photoName", form.photoName ? "" : "breakdown-photo.jpg");
                       toast.success(form.photoName ? "Photo removed" : "Photo attached (demo)");
                     }}
                     className="flex h-10 w-full items-center gap-2.5 rounded-md border border-dashed border-input bg-background/40 px-3 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
                   >
                     <Camera className="h-4 w-4 shrink-0" />
-                    <span className="truncate">{form.photoName ?? "Attach a photo"}</span>
+                    <span className="truncate">{form.photoName || "Attach a photo"}</span>
                   </button>
                 </Field>
               </div>
@@ -365,8 +369,8 @@ function Field({
   children,
 }: {
   label: string;
-  error?: string;
-  hint?: string;
+  error?: string | undefined;
+  hint?: string | undefined;
   children: React.ReactNode;
 }) {
   return (
