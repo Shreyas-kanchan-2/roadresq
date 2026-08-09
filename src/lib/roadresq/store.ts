@@ -88,5 +88,5 @@ export function newRequestId() {
 
 export function nextStatus(status: RequestStatus): RequestStatus {
   const i = statusSteps.indexOf(status);
-  return statusSteps[Math.min(i + 1, statusSteps.length - 1)];
+  return statusSteps[Math.min(i + 1, statusSteps.length - 1)]!;
 }

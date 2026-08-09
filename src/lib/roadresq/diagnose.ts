@@ -212,7 +212,7 @@ export function diagnose(input: string): Diagnosis | null {
     }
   }
 
-  const fallback: Rule = rules[rules.length - 1];
+  const fallback: Rule = rules[rules.length - 1]!;
   const chosen = best?.rule ?? fallback;
   const hits = best?.hits ?? [];
 
@@ -220,7 +220,7 @@ export function diagnose(input: string): Diagnosis | null {
   const order: Urgency[] = ["low", "moderate", "high"];
   const urgency: Urgency = escalated
     ? "high"
-    : order[Math.min(order.indexOf(chosen.urgency) + (text.length > 160 ? 0 : 0), 2)];
+    : order[Math.min(order.indexOf(chosen.urgency), 2)]!;
 
   const confidence: Diagnosis["confidence"] =
     hits.length >= 3 ? "strong" : hits.length >= 1 ? "moderate" : "low";
